@@ -6,7 +6,7 @@ Consome uma API usando requests e apresenta os dados em forma de tabela com bot√
 
 1. Clone o repositorio e entre na pasta.
     ```bash
-    git clone repositorio
+    git clone https://github.com/kauansr/Stract_Test.git
 
     cd Stract_Test
     ```
