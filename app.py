@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, render_template, Response
 from app.services import Platform_Services
-import csv
-import io
+from app.export_csv import download_csv
+
 
 app = Flask(__name__)
 
@@ -79,25 +79,10 @@ def export_csv(platforma):
     
     result_table = platform_services.get_platform_data(platforma)
 
-    if not result_table:
-        return "Nenhum dado disponível para exportar", 400
-
-    columns = result_table[0] 
-    rows = result_table[1:]     
-
-
-    output = io.StringIO()
-    writer = csv.writer(output)
-    
-    
-    writer.writerow(columns)
+    csv_export = download_csv(result_table)
 
     
-    writer.writerows(rows)
-
-    
-    output.seek(0)  
-    return Response(output.getvalue(), mimetype='text/csv', headers={
+    return Response(csv_export, mimetype='text/csv', headers={
         'Content-Disposition': f'attachment; filename={platforma}_relatorio.csv'
     })
 
@@ -106,25 +91,9 @@ def export_csv_resumo(platforma):
     
     result_table = platform_services.get_platform_data_resumo(platforma)
 
-    if not result_table:
-        return "Nenhum dado disponível para exportar", 400
+    csv_export = download_csv(result_table)
 
-    columns = result_table[0]  
-    rows = result_table[1:]   
-
-  
-    output = io.StringIO()
-    writer = csv.writer(output)
-    
-
-    writer.writerow(columns)
-
-   
-    writer.writerows(rows)
-
-   
-    output.seek(0) 
-    return Response(output.getvalue(), mimetype='text/csv', headers={
+    return Response(csv_export, mimetype='text/csv', headers={
         'Content-Disposition': f'attachment; filename={platforma}_resumo_relatorio.csv'
     })
 
@@ -136,26 +105,9 @@ def export_csv_geral():
     
     result_table = platform_services.get_platform_data_geral()
 
-    if not result_table:
-        return "Nenhum dado disponível para exportar", 400
+    csv_export = download_csv(result_table)
 
-    columns = result_table[0]  
-    rows = result_table[1:]    
-
-    
-    output = io.StringIO()
-    writer = csv.writer(output)
-
-   
-    writer.writerow(columns)
-
-    
-    writer.writerows(rows)
-
-    
-    output.seek(0)
-
-    return Response(output.getvalue(), mimetype='text/csv', headers={
+    return Response(csv_export, mimetype='text/csv', headers={
         'Content-Disposition': 'attachment; filename=relatorio_geral.csv'
     })
 
@@ -165,26 +117,9 @@ def export_csv_geral_resumo():
     
     result_table = platform_services.get_platform_data_geral_resumo()
 
-    if not result_table:
-        return "Nenhum dado disponível para exportar", 400
+    csv_export = download_csv(result_table)
 
-    columns = result_table[0]  
-    rows = result_table[1:]    
-
-    
-    output = io.StringIO()
-    writer = csv.writer(output)
-
-   
-    writer.writerow(columns)
-
-    
-    writer.writerows(rows)
-
-    
-    output.seek(0)
-
-    return Response(output.getvalue(), mimetype='text/csv', headers={
+    return Response(csv_export, mimetype='text/csv', headers={
         'Content-Disposition': 'attachment; filename=relatorio_geral_resumo.csv'
     })
 
