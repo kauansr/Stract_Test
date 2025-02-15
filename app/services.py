@@ -153,14 +153,6 @@ class Platform_Services:
         return result_table
 
 
-
-
-
-
-
-
-
-
     
 
 
@@ -218,7 +210,7 @@ class Platform_Services:
 
                 
                     for field_name in all_fields:
-                        field_value = 'N/A'
+                        field_value = ''
 
                         if field_name in field_mapping:
                             field_value = insight.get(field_mapping[field_name], 'N/A')
@@ -235,11 +227,6 @@ class Platform_Services:
                     result_table.append(row)
 
         return result_table
-
-    
-
-
-
 
 
 
